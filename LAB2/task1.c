@@ -3,7 +3,6 @@
 #include <unistd.h> /* for getopt */
 //#include <getopt.h>    /* for GNU extension getopt_long; POSIX standard getopt is in unistd.h */
 
-
 #define INPUT_FILE_LEN 0xffff
 char inputFileBuffer[INPUT_FILE_LEN];
 /*
@@ -20,7 +19,7 @@ UNITID,INSTNM, ...
 100654,"Alabama A & M University",...
 */
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
         char ch;
         char separator = ' ';
@@ -29,7 +28,7 @@ int main(int argc, char* argv[])
         int oldfield = 0;
         int fieldind = 0;
         int numfield = 0;
-        int searchind=0;
+        int searchind = 0;
         int i;
 
         while ((ch = getopt(argc, argv, "si")) != -1)
@@ -54,18 +53,18 @@ int main(int argc, char* argv[])
                         break;
                 }
         }
-        
-        numfield = argc-optind;
-        while(optind < argc)
+
+        numfield = argc - optind;
+        while (optind < argc)
         {
                 printf("\tfields %s\r\n", argv[optind]);
                 fields[fieldind++] = atoi(argv[optind++]);
         }
 
         printf("OUT: separator:%c, ignoredLines:%d\r\n", separator, ignoredLines);
-        printf("numfield:%d\t\n",numfield);
+        printf("numfield:%d\t\n", numfield);
         printf("fields: ");
-        for (fieldind=0; fields[fieldind]>0; fieldind++)
+        for (fieldind = 0; fields[fieldind] > 0; fieldind++)
         {
                 printf("%d ", fields[fieldind]);
         }
@@ -77,57 +76,58 @@ int main(int argc, char* argv[])
         fgets(inputFileBuffer,INPUT_FILE_LEN,stdin);
         printf("%s\r\n",inputFileBuffer);
         */
-        while(ignoredLines--)
-             fgets(inputFileBuffer,INPUT_FILE_LEN,stdin);
+        while (ignoredLines--)
+                fgets(inputFileBuffer, INPUT_FILE_LEN, stdin);
 
         printf("extract:\r\n");
-       for(fieldind=0,i=1; fieldind<numfield; fieldind++)
-        {                
-                                
-                if(fields[fieldind]>66 || fields[fieldind]<0)
+        for (fieldind = 0, i = 1; fieldind < numfield; fieldind++)
+        {
+
+                if (fields[fieldind] > 66 || fields[fieldind] < 0)
                 {
                         printf("the scale of fileds index is wrong\r\n");
-                        break;      
+                        break;
                 }
-                if(fields[fieldind]<=oldfield)
+                if (fields[fieldind] <= oldfield)
                 {
                         printf("the order of fileds index is wrong\r\n");
                         break;
                 }
                 //printf("i:%d, fields[fieldind]:%d\r\n", i, fields[fieldind]);
-                for(; i<fields[fieldind]; i++)//skip i=1  and  fields[0]=2
+                for (; i < fields[fieldind]; i++) //skip i=1  and  fields[0]=2
                 {
-                //     printf("skip the filed %d :\r\n",i);
-                     do
-                     {
-                        ch=fgetc(stdin);
-                        ////printf("%c",ch);
-                     }
-                     while(ch!='\n' && ch!=',');
-                     if(ch=='\n')break;
-                }
-                
-                if(i==fields[fieldind])
-                {
-                //     printf("print the filed %d :",i);
-                     oldfield=fields[fieldind];
-                     while(1){
-                        ch=fgetc(stdin);
-     
-                        if(ch=='\n' || ch==',')
+                        //     printf("skip the filed %d :\r\n",i);
+                        do
                         {
+                                ch = fgetc(stdin);
+                                ////printf("%c",ch);
+                        } while (ch != '\n' && ch != ',');
+                        if (ch == '\n')
                                 break;
-                        }
-                        printf("%c",ch);
-                     }
-                     if(ch==',')printf("%c",separator);
-                     i++;
-                     
                 }
 
-                if(ch=='\n')break;
-                
-        }   
+                if (i == fields[fieldind])
+                {
+                        //     printf("print the filed %d :",i);
+                        oldfield = fields[fieldind];
+                        while (1)
+                        {
+                                ch = fgetc(stdin);
+
+                                if (ch == '\n' || ch == ',')
+                                {
+                                        break;
+                                }
+                                printf("%c", ch);
+                        }
+                        if (ch == ',')
+                                printf("%c", separator);
+                        i++;
+                }
+
+                if (ch == '\n')
+                        break;
+        }
         printf("\r\n\r\n");
 
         return 0;
