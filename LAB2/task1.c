@@ -7,8 +7,8 @@
 char inputFileBuffer[INPUT_FILE_LEN];
 /*
 in termianl, type: man 3 getopt to look up how to use getopt
-The function to use for processing options is called getopt() 
-and man 3 getopt provides explanations as well as a complete example 
+The function to use for processing options is called getopt()
+and man 3 getopt provides explanations as well as a complete example
 ("3" is required, there is another getopt in section 1 of the manual).
 
 extract -s ';' -i 1 5 39 45 < unidata.csv
@@ -85,18 +85,20 @@ int main(int argc, char *argv[])
 
                 if (fields[fieldind] > 66 || fields[fieldind] < 0)
                 {
-                        printf("the scale of fileds index is wrong\r\n");
-                        break;
+                        printf("the scale of fileds index is wrong, exit(1)\r\n");
+                        exit(1);
+                        //break;
                 }
                 if (fields[fieldind] <= oldfield)
                 {
-                        printf("the order of fileds index is wrong\r\n");
-                        break;
+                        printf("the order of fileds index is wrong, exit(1)\r\n");
+                        exit(1);
+                        //break;
                 }
-                //printf("i:%d, fields[fieldind]:%d\r\n", i, fields[fieldind]);
+                printf("i:%d, fields[fieldind]:%d\r\n", i, fields[fieldind]);
                 for (; i < fields[fieldind]; i++) //skip i=1  and  fields[0]=2
                 {
-                        //     printf("skip the filed %d :\r\n",i);
+                        printf("skip the filed %d :\r\n",i);
                         do
                         {
                                 ch = fgetc(stdin);
@@ -108,7 +110,7 @@ int main(int argc, char *argv[])
 
                 if (i == fields[fieldind])
                 {
-                        //     printf("print the filed %d :",i);
+                        printf("print the filed %d :",i);
                         oldfield = fields[fieldind];
                         while (1)
                         {
