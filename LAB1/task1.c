@@ -9,14 +9,13 @@
 
 #define INPUT_LEN 80
 
-
-void myfgets(char * __restrict buffer, int length, FILE* file)
+void myfgets(char *__restrict buffer, int length, FILE *file)
 {
     char c;
-    int i=0;
-    while(((c=fgetc(file)) != '\n') && i<length)
+    int i = 0;
+    while (((c = fgetc(file)) != '\n') && i < length)
         buffer[i++] = c;
-    buffer[i++]='\0';
+    buffer[i++] = '\0';
 }
 
 int main()
@@ -27,12 +26,11 @@ int main()
     //printf("task1 says:hello world!\r\n");
 
     printf("Please input your name:");
+    //fgets(name, INPUT_LEN, stdin);
     myfgets(name, INPUT_LEN, stdin);
     printf("Please input your studentID:");
     myfgets(stuID, INPUT_LEN, stdin);
 
-
-
-    printf("Welcome %s id:%s to the C and C++ world\r\n", name, stuID);//output of name and ID have \n, what is the reason
+    printf("Welcome %s id:%s to the C and C++ world\r\n", name, stuID); //output of name and ID have \n, what is the reason
     return 0;
 }
